@@ -1,0 +1,35 @@
+service: raffle
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: python2.7
+  profile: serverless-admin
+  region: sa-east-1
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+
+functions:
+  list:
+    handler: handler.listDownloadFiles
+    events:
+      - http:
+          path: files
+          method: get
+          cors: true
+  # cron:
+  #   handler: handler.run
+  #   events:
+  #     # Invoke Lambda function every minute
+  #     - schedule: rate(1 minute)
+
+plugins:
+  - serverless-python-requirements
